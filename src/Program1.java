@@ -1,11 +1,15 @@
-//todo make a header with name data and explanation
+/////////////////////
+//Daniel Jaffe
+// Date made 8/27/24
+// This program takes a file with a bunch of number and turning them from their base to a new base and saying if there is a overflow
+/////////////////////
 
 // imports were found using W3School
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+// Todo add more comments get rid of other todo's and reformat code
 public class Program1 {
     // Converting to base 10
     public static Integer base10conversion(String[] parts) {
@@ -29,6 +33,7 @@ public class Program1 {
             // Look this up on chatgpt to find how to do exponential in java
             int exponent = (int) Math.pow(currentbase,numberStr.length() - i- 1 );
             numtobase10 += digit * exponent;
+            // todo Remember to get rid of this once done
 //            System.out.println("numtobase10: " + numtobase10);
 //            System.out.println("currentbase: " + currentbase);
 //            System.out.println("chardigit: " + chardigit);
@@ -43,30 +48,86 @@ public class Program1 {
     // converting to newbase
     //TOdo is it a bad thing to consistly use base10? here and in the main and in the other subroutine
     //Todo Why am I getting such a weird number for the second one?
-    public static Integer newbase(Integer base10,String[] parts){
+    public static String[] newbase(Integer base10,String[] parts){
         int quotient = base10;
         int remainder = 0;
-        int newnumber = 0;
         int basetocovertto = Integer.parseInt(parts[2]);
+        int counter = 0;
         // TOdo same with i i used it in a different subroutine
-        int i = 0;
+        String text = "";
         String base10str = String.valueOf(base10);
+        String[] text_counter = {"",""};
 
         while (quotient > 0 ) {
             remainder = quotient % basetocovertto;
             quotient = quotient/basetocovertto;
-            //Todo add if statement here for 10 through 15 values hexadecimal
-            newnumber += remainder * (int) Math.pow(10, i);
-            System.out.println("newnumber: " + newnumber);
-            System.out.println("base10str: " + base10str);
-            System.out.println("quotient: " + quotient);
-            System.out.println("remainder: " + remainder);
-            System.out.println("8888888888888888888888888888888");
-            i += 1;
+            switch (remainder){
+                case 10:
+                    text = "A" + text;
+                    counter += 2;
+                    break;
+                case 11:
+                    text = "B" + text;
+                    counter += 2;
+                    break;
+                case 12:
+                    text = "C" + text;
+                    counter += 2;
+                    break;
+                case 13:
+                    text = "D" + text;
+                    counter += 2;
+                    break;
+                case 14:
+                    text = "E" + text;
+                    counter += 2;
+                    break;
+                case 15:
+                    text = "F" + text;
+                    counter += 2;
+                    break;
+                default:
+                    text = Integer.toString(remainder) + text;
+                    counter += 1;
+            }
+//            todo get rid of this once done
+//            System.out.println("newnumber: " + text);
+//            System.out.println("base10str: " + base10str);
+//            System.out.println("quotient: " + quotient);
+//            System.out.println("remainder: " + remainder);
+//            System.out.println(text);
+//            System.out.println(counter_of_digits);
+//            System.out.println("8888888888888888888888888888888");
         }
-        return newnumber;
+        // making text and counter into a array to be returned
+        text_counter[0] = text;
+        text_counter[1] = Integer.toString(counter);
+        return text_counter;
     }
 
+// Todo make a subroutine to determine if their is a overflow
+    public static String overflow(String[] text_and_counter)
+    {
+
+        String text = text_and_counter[0];
+
+        // turn counter into an integer
+        int counter = Integer.parseInt((text_and_counter[1]));
+
+        int number_of_digits = 10-counter;
+        String Newtext = "";
+        if (number_of_digits < 0 ) {
+            Newtext = "Overflow";
+        }
+        else {
+            // Found the repeat function on chatgpt
+            Newtext = ("0".repeat(number_of_digits))+text;
+        }
+        return(Newtext);
+    }
+    //todo if number of digits is less than 0 return text = over flow
+    // todo otherwise take text and add 0 * number of digits
+    // todo return text
     public static void main(String[] args) {
         try {
             //Todo
@@ -83,9 +144,14 @@ public class Program1 {
 
                 System.out.println(base10);
 
-                int newbase = newbase(base10,parts);
+                String[] newbase = newbase(base10,parts);
 
-                System.out.println(newbase);
+                System.out.println(newbase[0]);
+                System.out.println(newbase[1]);
+
+                String overflow = overflow(newbase);
+
+                System.out.println(overflow);
             }
             // close the file
             myReader.close();
