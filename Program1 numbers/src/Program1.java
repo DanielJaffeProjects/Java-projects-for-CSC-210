@@ -10,7 +10,6 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 class Number{
-    //todo what is the point of this
     private final int number;
     private final int currentbase;
     private final int newbase;
@@ -122,7 +121,6 @@ class Number{
 }
 
 
-// Todo add more comments get rid of other todo's and reformat code
 public class Program1 {
 
 
